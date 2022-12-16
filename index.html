@@ -1,0 +1,110 @@
+<h1>hướng dẫn các lệnh script trong package.json</h1>
+
+<ul>
+  <li>run đồng thời client và server trong package.json</li>
+  <li>///////////////////////////////////</li>
+  <li>tạo npm init trong client và server và nasa-project</li>
+  <li>thiết lập port cho package.json trong server</li>
+  <li>
+    <pre>
+      "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "set PORT=5000&& node src/server.js",
+        "watch": "set PORT=5000&& nodemon src/server.js"
+      },
+    </pre>
+  </li>
+  <li>
+    <pre>
+      npm run watch // npm start // npm run start
+    </pre>
+  </li>
+  <li>chạy npm start trong client để check</li>
+  <li>.............</li>
+  <li>thiết lập chạy npm run client và npm run server trong nasa-project</li>
+  <li>
+    <pre>
+      "scripts": {
+        "server": "npm run watch --prefix server",
+        "client": "npm start --prefix client",
+        "test": "echo \"Error: no test specified\" && exit 1"
+      },
+    </pre>
+  </li>
+  <li>
+    <pre>
+      npm run server // nếu muốn chạy server 
+      npm run client nếu muốn chạy client
+    </pre>
+  </li>
+  <li>.............</li>
+  <li>cài npm i -g concurrently // để chạy đồng thời 2 cái</li>
+  <li>trong package.json ở nasa-project thiết lập như sau</li>
+  <li>
+    <pre>
+      "scripts": {
+        "server": "npm run watch --prefix server",
+        "client": "npm start --prefix client",
+        "watch": "concurrently \"npm run server\" \"npm run client\"",
+        "test": "echo \"Error: no test specified\" && exit 1"
+      },
+    </pre>
+  </li>
+  <li>npm run watch // là sẽ chạy đồng thời 2 cái</li>
+  <li>///////////////////////////////////</li>
+  <li>
+    không nên ứng dụng như vậy làm install cho client và server trong
+    package.json trong nasa-project// vì nó không worked
+  </li>
+
+  <li>//////////////////////////////////////</li>
+  <li>build production và chuyên sang folder public của server</li>
+  <li>đầu tiên thiết lập public trong server</li>
+  <li>
+    <pre>
+      import path from "path";
+      import { fileURLToPath } from "url";
+
+      // fix __dirname trong es6;
+      const __filename = fileURLToPath(import.meta.url);
+      // 👇️ "/home/john/Desktop/javascript"
+      const __dirname = path.dirname(__filename);
+
+      app.use(express.static(path.join(__dirname, "..", "public")));
+      app.get("/", (req, res) => {
+        res.sendFile(path.join(__dirname, "..", "public", "index.html"));
+      });
+    </pre>
+    mục đích là tạo route, nếu không sẽ không truy cập được, và các route của
+    react, chỉ chạy trong này
+  </li>
+  <li>trong client package</li>
+  <li>
+    <pre>
+      "scripts": {
+        "start": "react-scripts start",
+        "build": "set BUILD_PATH=../server/public&& react-scripts build",
+        "test": "react-scripts test --passWithNoTests",
+        "eject": "react-scripts eject"
+      },
+    </pre>
+    chú ý là không có dấu cách
+  </li>
+  <li>sau đó trong client run</li>
+  <li>
+    <pre>
+    npm run build
+  </pre
+    >
+    để kiểm tra có run được hay chưa
+  </li>
+  <li>sau đó vào server chỉ cần chạy</li>
+  <li>
+    <pre>
+      npm run watch là được
+    </pre>
+  </li>
+  <li>///////////////////////////////////////////////</li>
+  <li>vừa run build trong react, vừa chạy server</li>
+  <li>...</li>
+</ul>
