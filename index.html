@@ -106,5 +106,16 @@
   </li>
   <li>///////////////////////////////////////////////</li>
   <li>vừa run build trong react, vừa chạy server</li>
-  <li>...</li>
+  <li>
+    <pre>
+      "scripts": {
+        "server": "npm run watch --prefix server",
+        "client": "npm start --prefix client",
+        "watch": "concurrently \"npm run server\" \"npm run client\"",
+        "deploy": "npm run build --prefix client && npm run server",
+        "test": "echo \"Error: no test specified\" && exit 1"
+      },
+    </pre>
+    npm run deploy
+  </li>
 </ul>
